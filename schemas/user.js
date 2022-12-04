@@ -58,7 +58,7 @@ userSchema.methods.comparePassword = function(plainPassword, cb) {
 
 userSchema.methods.generateToken = function(cb) {
   const user = this;
-  const token = jwt.sign(user._id.toHexString(), 'secretToken'); // secretToken은 임의의 값
+  const token = jwt.sign(user._id.toHexString(), 'secret'); // secretToken은 임의의 값
   // user._id + 'secretToken' = token
   // toHexString은 toString의 상위 함수다 object 형태의 id를 24바이트의 hex 문자열로 바꾸어 리턴하는 함수
   user.token = token;
@@ -71,12 +71,12 @@ userSchema.methods.generateToken = function(cb) {
 userSchema.statics.findByToken = function(token, cb) {
   const user = this;
   // token을 decode 한다
-  jwt.verify(token, 'secretToken', function(err, decode) {
+  jwt.verify(token, 'secret', function(err, decoded) {
     // secretToken은 임의로 넣었던 값
     // 유저 아이디를 이용해서 유저를 찾고
     //클라이언트에서 가져온 토큰과 디비에 보관된 토큰을 비교
 
-    user.findOne({"_id": decode, "token": token }, function(err, user) {
+    user.findOne({"_id": decoded, "token": token }, function(err, user) {
       if(err) return cb(err);
       cb(null, user);
     })
