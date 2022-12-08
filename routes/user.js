@@ -67,7 +67,7 @@ router.post('/pw', (req, res) => {
               pwResult: true,
               message: "로그인 성공"
             });
-        })
+        });
       }
     });
   });
