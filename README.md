@@ -1,7 +1,7 @@
 <div align="center">
 
-![header](https://capsule-render.vercel.app/api?type=waving&text=스웹&height=250&fontColor=FFFFFF&fontSize=60&fontAlignY=40&color=timeGradient)
-# 스웹 - 스터디그룹 매칭 웹사이트(임시)
+![header](https://capsule-render.vercel.app/api?type=waving&text=스매시&height=250&fontColor=FFFFFF&fontSize=60&fontAlignY=40&color=timeGradient)
+# 스매시 - 스터디그룹 매칭 시스템(임시)
 <div align="center">📗Languages📗</div>
 <div align="center">
   <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white"/>
