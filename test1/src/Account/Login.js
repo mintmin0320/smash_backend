@@ -31,22 +31,52 @@ const Login = () => {
   const handleEnterPress = (params, e) => {
     if (e.key === 'Enter' && e.target.value !== '') {
       if (params === 'id') {
-        handleIdCheck();
+        //handleIdCheck();
+        if (e.target.value === 'hamin') {
+          setState({
+            ...state,
+            idResult: true,
+            idValidation: true,
+          });
+        }
+        else {
+          setState({
+            ...state,
+            idResult: false,
+            idValidation: true,
+          });
+        }
       }
       else {
-        handlePwCheck();
+        //handlePwCheck();
+        if (e.target.value === '1234') {
+          setState({
+            ...state,
+            pwResult: true,
+            pwValidation: true,
+          });
+        }
+        else {
+          setState({
+            ...state,
+            pwResult: false,
+            pwValidation: true,
+          });
+        }
       }
     }
   };
 
   const handleIdCheck = async () => {
-    const url = `http://192.168.219.100:8080/user/id`
+    // const url = `http://192.168.219.100:8080/user/id`
+    const url = `http://localhost:8080/user/id`
     const params = {
       userId: state.userId,
     }
     try {
       const res = await axios.post(url, params);
       console.log(res);
+      console.log(params);
       if (res.data.idResult) {
         setState({
           ...state,
@@ -126,6 +156,7 @@ const Login = () => {
     <Container>
       <LoginBox>
         <MenubarBox>
+          &nbsp;&nbsp;
           <ButtonBox>
             <MenuButton btnColor={"red"} />
             <MenuButton btnColor={"orange"} />
@@ -252,8 +283,8 @@ const ButtonBox = styled.div`
 `
 
 const MenuButton = styled.button`
-  width: 10%;
-  height: 50%;
+  width: 12px;
+  height: 12px;
   display: flex;
   border: solid 1px black;
   border-radius: 50%;
