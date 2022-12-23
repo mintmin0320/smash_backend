@@ -1,18 +1,23 @@
 const express = require('express');
-const app = express();
 const cors = require('cors');
+const morgan = require('morgan'); //morgan은 nodeJS 에서 사용되는 로그 관리를 위한 미들웨어, 로그 관리를 쉽게 하기 위함
 const connect = require('./schemas');
 const cookieParser = require('cookie-parser');
-require('dotenv').config();
+const dotenv = require('dotenv');
 
+dotenv.config();
+const app = express();
+const origin = "http://localhost:3000";
 const corsOptions = {
-  origin: "*",
+  origin,
   credential: true,
 }
+
 app.use(cookieParser());
+app.use(morgan('dev'));
 app.use(cors(corsOptions));
-app.use(express.json()); 
-app.use(express.urlencoded( {extended : false } ));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 // extended를 true로 주면 추가 설치가 필요한 qs모듈 사용
 // false면 node에 기본 내장된 쿼리스트링 모듈사용 qs모듈은 express에 자동 설치되서
 // false 하면 됨
