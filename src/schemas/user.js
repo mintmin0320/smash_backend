@@ -44,19 +44,17 @@ userSchema.pre("save", function (next) {
       })
     })
   } else {
-    next()
+    next();
   }
 });
 
 userSchema.methods.comparePassword = function (plainPassword, cb) {
   // plainPassword = 입력받은 비밀번호 복호화해서 비교, cb는 콜백의 약자(ismatch와, err)
   bcrypt.compare(plainPassword, this.userPw, function (err, isMatch) {
-    console.log(isMatch);
     if (err) {
       return cb(err) // compare()은 문자열 비교 함수 에러가 있으면 콜백에 에러를 리턴하고
     }
     else {
-
       cb(null, isMatch) // 없으면 에러에 null user에 isMatch를 반환
     }
   })
@@ -64,7 +62,7 @@ userSchema.methods.comparePassword = function (plainPassword, cb) {
 
 userSchema.methods.generateToken = function (cb) {
   const user = this;
-  const token = jwt.sign(user._id.toHexString(), process.env.PORT); // 임의의 값
+  const token = jwt.sign(user._id.toHexString(), process.env.SECRET_TOKEN); // 임의의 값
   // user._id + 'secretToken' = token
   // toHexString은 toString의 상위 함수다 object 형태의 id를 24바이트의 hex 문자열로 바꾸어 리턴하는 함수
   user.token = token;
@@ -77,7 +75,7 @@ userSchema.methods.generateToken = function (cb) {
 userSchema.statics.findByToken = function (token, cb) {
   const user = this;
   // token을 decode 한다
-  jwt.verify(token, process.env.PORT, function (err, decoded) {
+  jwt.verify(token, process.env.SECRET_TOKEN, function (err, decoded) {
     // process.env.PORT은 임의로 넣었던 값
     // 유저 아이디를 이용해서 유저를 찾고
     //클라이언트에서 가져온 토큰과 디비에 보관된 토큰을 비교

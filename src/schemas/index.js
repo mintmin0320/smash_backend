@@ -4,10 +4,10 @@ const dbURL = `mongodb+srv://admin:${process.env.DB_PASSWORD}@cluster0.onnjtc5.m
 
 const connect = () => {
   mongoose.connect(dbURL, {
-    dbName: 'test1', // 실제 데이터 저장할 db명
+    dbName: 'smash', // 실제 데이터 저장할 db명
   })
-  .then(() => console.log('MongoDB connected'))
-  .catch((err) => console.log(err));
+    .then(() => console.log('MongoDB connected'))
+    .catch((err) => console.log(err));
 }
 
 // 몽구스 커넥션에 이벤트 리스너를 달게 해준다. 에러 발생 시 에러 내용을 기록하고, 연결 종료 시 재연결을 시도한다.
