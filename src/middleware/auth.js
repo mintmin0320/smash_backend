@@ -66,4 +66,26 @@ const signUserPw = async (req, res) => {
   }
 };
 
-module.exports = { signUp, signUserId, signUserPw };
+const signStatus = async (req, res, next) => {
+  try {
+    const token = req.cookies.token;
+    if (!token) return next();
+
+    const { userId } = jwt.verify(token, process.env.SECRET_TOKEN);
+
+    const user = await User.findOne({ userId });
+
+    if (!user) throw new Error("Unauthenticated");
+
+
+    return res.json(userId);
+
+
+  } catch (error) {
+    console.log(error);
+    return res.json({ error: "Something went wrong" });
+
+  }
+}
+
+module.exports = { signUp, signUserId, signUserPw, signStatus };
