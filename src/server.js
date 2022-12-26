@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: false }));
 // .json()은 JSON형태의 데이터를 해석해줍니다.
 
 // 몽고 디비 연결
-connect();
+
 
 // router
 const indexRouter = require('./routes'); // router.get('/', (req, res) => { ... 을 불러옴
@@ -39,6 +39,7 @@ app.use((req, res, next) => { // 기본경로나 /user말고 다른곳 진입했
 
 app.listen(8080, () => {
   console.log(`server is running on ${process.env.PORT}`);
+  // connect();
 });
 
 
