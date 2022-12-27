@@ -20,12 +20,6 @@ const userSchema = new Schema({
     type: Number,
     default: 0, // 따로 입력 안 하면 0
   },
-  token: {
-    type: String,
-  },
-  tokenExp: { // 유효기간
-    type: Number,
-  }
 }, {
   versionKey: false,
 });

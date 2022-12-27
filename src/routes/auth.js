@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { signUp, signUserId, signUserPw, signOut, signStatus } = require('../middleware/auth');
+const Post = require('../schemas/post');
 
-// 회원가입
+// 인증 관련
 router.post("/signUp", signUp);
 router.post("/id", signUserId);
 router.post("/password", signUserPw);
