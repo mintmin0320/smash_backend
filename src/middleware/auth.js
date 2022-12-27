@@ -66,6 +66,18 @@ const signUserPw = async (req, res) => {
   }
 };
 
+const signOut = async (_, res) => {
+  res.set(
+    "Set-Cookie",
+    cookie.serialize("token", "", {
+      httpOnly: true,
+      expires: new Date(0),
+      path: "/"
+    })
+  );
+  res.json({ result: true });
+};
+
 const signStatus = async (req, res, next) => {
   try {
     const token = req.cookies.token;
@@ -88,4 +100,4 @@ const signStatus = async (req, res, next) => {
   }
 }
 
-module.exports = { signUp, signUserId, signUserPw, signStatus };
+module.exports = { signUp, signUserId, signUserPw, signOut, signStatus };
