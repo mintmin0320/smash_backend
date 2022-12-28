@@ -3,6 +3,7 @@ const cors = require('cors');
 const morgan = require('morgan'); //morgan은 nodeJS 에서 사용되는 로그 관리를 위한 미들웨어, 로그 관리를 쉽게 하기 위함
 const connect = require('./schemas');
 const authRoute = require('../src/routes/auth');
+const postRoute = require('../src/routes/post');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 
@@ -26,6 +27,7 @@ app.use(express.urlencoded({ extended: false }));
 // .json()은 JSON형태의 데이터를 해석해줍니다.
 
 app.use('/api/auth', authRoute);
+app.use('/api/post', postRoute);
 app.use((_, res,) => { // 기본경로나 /user말고 다른곳 진입했을경우 실행
   res.status(404).send('Not Found');
 });
