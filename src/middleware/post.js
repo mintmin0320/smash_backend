@@ -1,6 +1,6 @@
+const { ObjectId } = require('mongodb');
 const Post = require('../schemas/post');
 const User = require('../schemas/user');
-
 
 const getPost = async (_, res) => {
   try {
@@ -30,4 +30,18 @@ const writePost = async (req, res) => {
   }
 };
 
-module.exports = { getPost, writePost };
+const viewPost = async (req, res) => {
+  console.log(`id : ${req.params.id}`);
+  try {
+    const post = await Post.findOne({
+      _id: ObjectId(req.params.id)
+    });
+    console.log(post);
+    res.json({ result: post });
+  } catch (error) {
+    console.log(error);
+    res.json({ result: false });
+  }
+};
+
+module.exports = { getPost, writePost, viewPost };
