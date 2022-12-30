@@ -89,15 +89,12 @@ const signStatus = async (req, res, next) => {
 
     if (!user) throw new Error("Unauthenticated");
 
-
     return res.json(userId);
-
 
   } catch (error) {
     console.log(error);
     return res.json({ error: "Something went wrong" });
-
   }
-}
+};
 
 module.exports = { signUp, signUserId, signUserPw, signOut, signStatus };
