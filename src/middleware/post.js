@@ -2,7 +2,7 @@ const { ObjectId } = require('mongodb');
 const Post = require('../schemas/post');
 const User = require('../schemas/user');
 
-const getPost = async (_, res) => {
+const postList = async (_, res) => {
   try {
     const post = await Post.find({}).populate('author');
     return res.json({ result: true, message: "게시글 목록조회 성공!!", postList: post });
@@ -46,15 +46,18 @@ const viewPost = async (req, res) => {
 
 const searchPost = async (req, res) => {
   console.log(`search : ${req.params.search}`);
+  const regex = (pattern) => new RegExp(`.*${pattern}.*`);
+  const searchRegex = regex(req.params.search);
   try {
     const post = await Post.find({
-    });
+      title: { $regex: searchRegex }
+    }).populate('author');
     console.log(post);
-    res.json({ result: post });
+    res.json({ result: true, postList: post });
   } catch (error) {
     console.log(error);
     res.json({ result: false });
   }
 };
 
-module.exports = { getPost, writePost, viewPost };
+module.exports = { postList, writePost, viewPost, searchPost };
