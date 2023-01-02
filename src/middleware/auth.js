@@ -44,7 +44,7 @@ const signUserPw = async (req, res) => {
   const { userId, userPw } = req.body;
   try {
     const user = await User.findOne({ userId });
-    const passwordMatches = await bcrypt.compare(userPw, user.userPw);
+    const passwordMatches = bcrypt.compare(userPw, user.userPw);
 
     if (!passwordMatches) {
       return res.json({ pwResult: false, message: "비밀번호가 잘못되었습니다." });
@@ -58,7 +58,7 @@ const signUserPw = async (req, res) => {
       path: "/"
     }));
     console.log(token);
-    return res.json({ pwResult: true, message: "로그인 성공!", token });
+    return res.json({ pwResult: true, message: "로그인 성공!", token, user });
 
   } catch (error) {
     console.log(error);

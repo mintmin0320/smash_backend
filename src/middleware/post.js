@@ -2,6 +2,7 @@ const { ObjectId } = require('mongodb');
 const Post = require('../schemas/post');
 const User = require('../schemas/user');
 
+
 const postList = async (_, res) => {
   try {
     const post = await Post.find({}).populate('author');
@@ -14,12 +15,14 @@ const postList = async (_, res) => {
 };
 
 const writePost = async (req, res) => {
+  const date = new Date();
   const author = await User.findOne({ userId: req.body.userId });
   try {
     const post = await Post.create({
       title: req.body.postTitle,
       body: req.body.postBody,
       author: author,
+      date: date.toLocaleString(),
     });
     console.log(post);
     return res.json({ result: true, message: "게시글 입력성공!" });
