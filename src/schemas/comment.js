@@ -5,10 +5,16 @@ const commentSchema = new Schema({
   body: {
     type: String,
   },
-  author: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
+  userId: {
+    type: String,
   },
+  postId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Post',
+  },
+  date: {
+    type: String,
+  }
 }, {
   versionKey: false,
 })
