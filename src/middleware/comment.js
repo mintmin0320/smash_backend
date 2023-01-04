@@ -1,13 +1,13 @@
 const { ObjectId } = require('mongodb');
-const User = require('../schemas/user');
+const Post = require('../schemas/post');
 const Comment = require('../schemas/comment');
-
 
 const commentList = async (req, res) => {
   try {
-    const cmt = await Comment.findOne({
-      _id: ObjectId(req.body.postId)
+    const cmt = await Post.find({
+      postId: ObjectId(req.body.postId)
     }).populate('author');
+    console.log(cmt);
     return res.json({ result: true, message: "댓글 목록조회 성공!!", cmtList: cmt });
 
   } catch (error) {
@@ -22,6 +22,7 @@ const writeComment = async (req, res) => {
     const cmt = await Comment.create({
       body: req.body.cmtBody,
       userId: req.body.userId,
+      postId: req.body.postId,
       date: date.toLocaleString(),
     });
     console.log(cmt);
