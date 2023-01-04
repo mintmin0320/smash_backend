@@ -4,6 +4,6 @@ const { writeComment, commentList } = require('../middleware/comment');
 
 // 게시물 관련
 router.post("/write", writeComment);
-router.get("/list", commentList);
+router.get("/list/:id", commentList);
 
 module.exports = router;
