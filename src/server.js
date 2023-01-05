@@ -4,6 +4,7 @@ const morgan = require('morgan'); //morgan은 nodeJS 에서 사용되는 로그 
 const connect = require('./schemas');
 const authRoute = require('../src/routes/auth');
 const postRoute = require('../src/routes/post');
+const widgetRoute = require('../src/routes/widget');
 const commentRoute = require('../src/routes/comment');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
@@ -20,7 +21,7 @@ app.use(cookieParser());
 app.use(morgan('dev'));
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 // extended를 true로 주면 추가 설치가 필요한 qs모듈 사용
 // false면 node에 기본 내장된 쿼리스트링 모듈사용 qs모듈은 express에 자동 설치되서
 // false 하면 됨
@@ -29,6 +30,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/api/auth', authRoute);
 app.use('/api/post', postRoute);
+app.use('/api/widget', widgetRoute);
 app.use('/api/comment', commentRoute);
 app.use((_, res,) => { // 기본경로나 /user말고 다른곳 진입했을경우 실행
   res.status(404).send('Not Found');
