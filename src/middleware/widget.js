@@ -1,14 +1,17 @@
 const request = require('request');
 
-const weather = async (req, res) => {
+const weather = async (_, res) => {
   const date = new Date();
   const year = date.getFullYear();
   const month = ("0" + (1 + date.getMonth())).slice(-2);
   const day = ("0" + date.getDate()).slice(-2);
   const today = year + month + day;
-  const hour = date.getHours() + "00"
-  console.log(today);
-  console.log(today);
+  let hour = date.getHours();
+  hour = hour >= 10 ? hour : '0' + hour;
+  const time = hour + '00';
+  let highTemperature = '';
+  let lowTemperature = '';
+  let ptyData = '';
 
   try {
     const url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst';
@@ -26,9 +29,23 @@ const weather = async (req, res) => {
     }, function (error, response, body) {
       console.log('Status', response.statusCode);
       //console.log('Headers', JSON.stringify(response.headers));
+      // console.log('Reponse received', weather.response.body.items.item);
       const weather = JSON.parse(body);
-      console.log('Reponse received', weather.response.body.items.item);
-      return res.json({ result: weather.response.body.items.item, message: "날씨 조회 성공!" });
+      const weatherData = weather.response.body.items.item;
+      try {
+        for (let i = 0; i < weatherData.length; i++) {
+          if (weatherData[i].category === "TMX") {
+            highTemperature = weatherData[i].fcstValue;
+          } else if (weatherData[i].category === "TMN") {
+            lowTemperature = weatherData[i].fcstValue;
+          } else if (weatherData[i].baseDate === today && weatherData[i].category === "PTY" && weatherData[i].fcstTime === time) {
+            ptyData = weatherData[i].fcstValue;
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
+      return res.json({ high: highTemperature, low: lowTemperature, pty: ptyData, message: "날씨 조회 성공!" });
     });
   } catch (error) {
     console.log(error);
