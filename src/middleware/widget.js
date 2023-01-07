@@ -11,7 +11,7 @@ const weather = async (_, res) => {
   const time = hour + '00';
   let highTemperature = '';
   let lowTemperature = '';
-  let ptyData = '';
+  let skyData = '';
 
   try {
     const url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst';
@@ -27,10 +27,9 @@ const weather = async (_, res) => {
       url: url + queryParams,
       method: 'GET'
     }, function (error, response, body) {
-      console.log('Status', response.statusCode);
       //console.log('Headers', JSON.stringify(response.headers));
       // console.log('Reponse received', weather.response.body.items.item);
-      const weather = JSON.parse(body);
+      let weather = JSON.parse(body);
       const weatherData = weather.response.body.items.item;
       try {
         for (let i = 0; i < weatherData.length; i++) {
@@ -38,14 +37,14 @@ const weather = async (_, res) => {
             highTemperature = weatherData[i].fcstValue;
           } else if (weatherData[i].category === "TMN") {
             lowTemperature = weatherData[i].fcstValue;
-          } else if (weatherData[i].baseDate === today && weatherData[i].category === "PTY" && weatherData[i].fcstTime === time) {
-            ptyData = weatherData[i].fcstValue;
+          } else if (weatherData[i].baseDate === today && weatherData[i].category === "SKY" && weatherData[i].fcstTime === time) {
+            skyData = weatherData[i].fcstValue;
           }
         }
       } catch (error) {
         console.log(error);
       }
-      return res.json({ high: highTemperature, low: lowTemperature, pty: ptyData, message: "날씨 조회 성공!" });
+      return res.json({ high: highTemperature, low: lowTemperature, sky: skyData, message: "날씨 조회 성공!" });
     });
   } catch (error) {
     console.log(error);

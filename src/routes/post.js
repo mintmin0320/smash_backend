@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const path = require('path');
 const { postList, writePost, viewPost, searchPost } = require('../middleware/post');
 
 // 게시물 관련

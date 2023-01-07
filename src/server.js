@@ -36,6 +36,11 @@ app.use((_, res,) => { // 기본경로나 /user말고 다른곳 진입했을경�
   res.status(404).send('Not Found');
 });
 
+app.get('/d', (req, res) => {
+  res.send('h2')
+  // res.sendFile('./view/map.html');
+});
+
 app.listen(8080, () => {
   console.log(`server is running on ${process.env.PORT}`);
 
