@@ -17,7 +17,7 @@ const weather = async (_, res) => {
     const url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst';
     let queryParams = '?' + encodeURIComponent('serviceKey') + `=${process.env.WEATHER_SERVICEKEY}`;
     queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /* */
-    queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('310'); /* */
+    queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('350'); /* */
     queryParams += '&' + encodeURIComponent('dataType') + '=' + encodeURIComponent('JSON'); /* */
     queryParams += '&' + encodeURIComponent('base_date') + '=' + encodeURIComponent(today); /* */
     queryParams += '&' + encodeURIComponent('base_time') + '=' + encodeURIComponent("0500"); /* */
@@ -44,7 +44,7 @@ const weather = async (_, res) => {
       } catch (error) {
         console.log(error);
       }
-      return res.json({ high: highTemperature, low: lowTemperature, sky: skyData, message: "날씨 조회 성공!" });
+      return res.json({ high: highTemperature, low: lowTemperature, sky: skyData, message: "날씨 조회 성공!", dd: weatherData });
     });
   } catch (error) {
     console.log(error);
