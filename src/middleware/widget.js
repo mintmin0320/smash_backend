@@ -44,7 +44,7 @@ const weather = async (_, res) => {
       } catch (error) {
         console.log(error);
       }
-      return res.json({ high: highTemperature, low: lowTemperature, sky: skyData, message: "날씨 조회 성공!", dd: weatherData });
+      return res.json({ weatherData, high: highTemperature, low: lowTemperature, sky: skyData, message: "날씨 조회 성공!", dd: weatherData });
     });
   } catch (error) {
     console.log(error);
