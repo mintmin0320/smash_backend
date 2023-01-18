@@ -18,14 +18,14 @@ const createMatch = async (req, res) => {
   const date = new Date();
   const author = await User.findOne({ userId: req.body.userId });
   try {
-    const post = await Post.create({
+    const match = await Match.create({
       title: req.body.postTitle,
       body: req.body.postBody,
       author: author,
       date: date.toLocaleString(),
     });
-    console.log(post);
-    return res.json({ result: true, message: "게시글 입력성공!" });
+    console.log(match);
+    return res.json({ result: true, message: "그룹 생성 성공!" });
 
   } catch (error) {
     console.log(error);
