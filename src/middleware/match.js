@@ -31,7 +31,7 @@ const createGroup = async (req, res) => {
   }
 };
 
-const viewGroup = async (req, res) => {
+const detailView = async (req, res) => {
   console.log(`id : ${req.params.id}`);
   try {
     const match = await Match.findOne({
@@ -61,4 +61,4 @@ const searchGroup = async (req, res) => {
   }
 };
 
-module.exports = { groupList, createGroup, searchGroup, viewGroup };
+module.exports = { groupList, createGroup, searchGroup, detailView };
