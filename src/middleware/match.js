@@ -13,7 +13,7 @@ const groupList = async (_, res) => {
   }
 };
 
-const createGroup = async (req, res) => {
+const recruitGroup = async (req, res) => {
   const date = new Date();
   const author = await User.findOne({ userId: req.body.userId });
   try {
@@ -61,4 +61,4 @@ const searchGroup = async (req, res) => {
   }
 };
 
-module.exports = { groupList, createGroup, searchGroup, detailView };
+module.exports = { groupList, recruitGroup, searchGroup, detailView };
