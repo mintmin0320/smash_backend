@@ -16,6 +16,9 @@ const userSchema = new Schema({
     type: String, // Int32가 아니다. 기본 자바스크립트에는 존재하지 않으니 넘버로 해줘야 한다.
     // required: true,
   },
+  profileImg: {
+    type: String
+  },
   role: {        // 관리자 구분 
     type: Number,
     default: 0, // 따로 입력 안 하면 0

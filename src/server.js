@@ -2,12 +2,16 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan'); //morgan은 nodeJS 에서 사용되는 로그 관리를 위한 미들웨어, 로그 관리를 쉽게 하기 위함
 const connect = require('./schemas');
+const upload = require('multer')();
+
 // routes
 const authRoute = require('../src/routes/auth');
 const postRoute = require('../src/routes/post');
 const widgetRoute = require('../src/routes/widget');
 const matchRoute = require('../src/routes/match');
 const commentRoute = require('../src/routes/comment');
+const userRoute = require('../src/routes/user');
+
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 
@@ -20,7 +24,9 @@ const corsOptions = {
 }
 
 app.use(cookieParser());
+app.use(express.static('public'));
 app.use(morgan('dev'));
+app.use(upload.array()); //이게 formdata를 파싱해준다고합니다.
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -35,6 +41,8 @@ app.use('/api/post', postRoute);
 app.use('/api/widget', widgetRoute);
 app.use('/api/comment', commentRoute);
 app.use('/api/match', matchRoute);
+app.use('/api/user', userRoute);
+
 app.use((_, res,) => { // 기본경로나 /user말고 다른곳 진입했을경우 실행
   res.status(404).send('Not Found');
 });
@@ -45,7 +53,3 @@ app.listen(8080, () => {
   // 몽고 디비 연결
   connect();
 });
-
-
-
-
