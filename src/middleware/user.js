@@ -43,20 +43,23 @@ function makeId(length) {
 //   }
 // }
 
-const signUp = async (req, res) => {
-  console.log(req.body);
-  // try {
-  //   const user = await User.create({
-  //     userId: req.body.userId,
-  //     userPw: req.body.userPw,
-  //   });
-  //   console.log(user);
-  //   return res.json({ result: true, message: "회원가입 성공!" });
+const uploadFile = async (req, res) => {
+  // console.log(req.files);
+  const file = req.files.file;
+  console.log(file);
 
-  // } catch (error) {
-  //   console.log(error);
-  //   return res.json({ result: false, message: "회원가입 실패!" });
-  // }
+  const path = __dirname + "/../../public/images/" + file.name;
+
+  if (!req.files) {
+    return res.status(400).send("No files were uploaded.");
+  }
+
+  file.mv(path, (err) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+    return res.send({ status: "success", path: path });
+  });
 };
 
 const signUserId = async (req, res) => {
@@ -138,4 +141,4 @@ const signStatus = async (req, res, next) => {
   }
 };
 
-module.exports = { signUp, signUserId, signUserPw, signOut, signStatus };
+module.exports = { uploadFile, signUserId, signUserPw, signOut, signStatus };

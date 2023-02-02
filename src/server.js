@@ -1,8 +1,9 @@
 const express = require('express');
+const fileUpload = require("express-fileupload");
+const path = require("path");
 const cors = require('cors');
 const morgan = require('morgan'); //morgan은 nodeJS 에서 사용되는 로그 관리를 위한 미들웨어, 로그 관리를 쉽게 하기 위함
 const connect = require('./schemas');
-const upload = require('multer')();
 
 // routes
 const authRoute = require('../src/routes/auth');
@@ -26,9 +27,9 @@ const corsOptions = {
 app.use(cookieParser());
 app.use(express.static('public'));
 app.use(morgan('dev'));
-app.use(upload.array()); //이게 formdata를 파싱해준다고합니다.
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(fileUpload({ createParentPath: true, }));
 app.use(express.urlencoded({ extended: true }));
 // extended를 true로 주면 추가 설치가 필요한 qs모듈 사용
 // false면 node에 기본 내장된 쿼리스트링 모듈사용 qs모듈은 express에 자동 설치되서
