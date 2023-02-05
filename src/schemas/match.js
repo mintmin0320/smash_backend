@@ -14,6 +14,18 @@ const matchSchema = new Schema({
   },
   date: {
     type: String,
+  },
+  count: {
+    type: String,
+  },
+  category: {
+    type: String,
+  },
+  latitude: {
+    type: String,
+  },
+  longitude: {
+    type: String,
   }
 }, {
   versionKey: false,

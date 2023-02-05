@@ -1,50 +1,6 @@
 const User = require('../schemas/user');
 
-function makeId(length) {
-  const result = '';
-  const characters = 'ABCDEFGHIJKLMOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-  const charactersLength = characters.length;
-  for (let i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.floor() * charactersLength));
-  }
-  return result
-}
-
-// const upload = multer({
-//   storage: multer.diskStorage({
-//     destination: "public/images",
-//     filename: (_, file, callback) => {
-//       const name = makeId(10);
-//       callback(null, name + path.extname(file.originalname));
-//     },
-
-//   }),
-//   fileFilter: (_, file, callback) => {
-//     if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
-//       callback(null, true);
-//     }
-//     else {
-//       callback(new Error("이미지가 아닙니다."));
-//     }
-//   },
-// });
-
-
-// const uploadImage = async(req, res) => {
-//   try {
-//     const type = req.body.type;
-//     let oldImageUrn = "";
-//     if(type === "image") {
-//       oldImageUrn = 
-//     }
-
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
-
 const uploadFile = async (req, res) => {
-  // console.log(req.files);
   const file = req.files.file;
   console.log(file);
 

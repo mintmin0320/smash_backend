@@ -18,9 +18,13 @@ const recruitGroup = async (req, res) => {
   const author = await User.findOne({ userId: req.body.userId });
   try {
     const match = await Match.create({
-      title: req.body.postTitle,
-      body: req.body.postBody,
-      author: author,
+      title: req.body.title,
+      count: req.body.count,
+      body: req.body.body,
+      category: req.body.category,
+      latitude: req.body.latitude,
+      longitude: req.body.longitude,
+      // author: "author",
       date: date.toLocaleString(),
     });
     console.log(match);
