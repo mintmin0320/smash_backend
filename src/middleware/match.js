@@ -58,11 +58,25 @@ const searchGroup = async (req, res) => {
       title: { $regex: searchRegex }
     }).populate('author');
     console.log(match);
-    res.json({ result: true, matchList: match });
+    res.json({ result: true, matchList: match, message: "shi" });
   } catch (error) {
     console.log(error);
     res.json({ result: false });
   }
 };
 
-module.exports = { groupList, recruitGroup, searchGroup, detailView };
+const classificationGroup = async (req, res) => {
+  console.log("category: " + req.params.category);
+  try {
+    const match = await Match.find({
+      category: req.params.category
+    });
+    console.log(match);
+    res.json({ result: true, groupList: match, message: "hi" });
+  } catch (error) {
+    console.log(error);
+    res.json({ result: false });
+  }
+};
+
+module.exports = { groupList, recruitGroup, searchGroup, detailView, classificationGroup };

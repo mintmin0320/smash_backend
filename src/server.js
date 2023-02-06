@@ -1,23 +1,13 @@
 const express = require('express');
+const app = express();
 const fileUpload = require("express-fileupload");
-const path = require("path");
 const cors = require('cors');
 const morgan = require('morgan'); //morgan은 nodeJS 에서 사용되는 로그 관리를 위한 미들웨어, 로그 관리를 쉽게 하기 위함
 const connect = require('./schemas');
-
-// routes
-const authRoute = require('../src/routes/auth');
-const postRoute = require('../src/routes/post');
-const widgetRoute = require('../src/routes/widget');
-const matchRoute = require('../src/routes/match');
-const commentRoute = require('../src/routes/comment');
-const userRoute = require('../src/routes/user');
-
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 
 dotenv.config();
-const app = express();
 const origin = process.env.ORIGIN;
 const corsOptions = {
   origin: origin,
@@ -28,9 +18,18 @@ app.use(cookieParser());
 app.use(express.static('public'));
 app.use(morgan('dev'));
 app.use(cors(corsOptions));
-app.use(express.json());
 app.use(fileUpload({ createParentPath: true, }));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+// routes
+const authRoute = require('../src/routes/auth');
+const postRoute = require('../src/routes/post');
+const widgetRoute = require('../src/routes/widget');
+const matchRoute = require('../src/routes/match');
+const commentRoute = require('../src/routes/comment');
+const userRoute = require('../src/routes/user');
+
 // extended를 true로 주면 추가 설치가 필요한 qs모듈 사용
 // false면 node에 기본 내장된 쿼리스트링 모듈사용 qs모듈은 express에 자동 설치되서
 // false 하면 됨
