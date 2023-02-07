@@ -9,15 +9,14 @@ const weather = async (_, res) => {
   let hour = date.getHours();
   hour = hour >= 10 ? hour : '0' + hour;
   const time = hour + '00';
-  let highTemperature = '';
-  let lowTemperature = '';
+  let tmpData = '';
   let skyData = '';
 
   try {
     const url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst';
     let queryParams = '?' + encodeURIComponent('serviceKey') + `=${process.env.WEATHER_SERVICEKEY}`;
     queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /* */
-    queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('350'); /* */
+    queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('290'); /* */
     queryParams += '&' + encodeURIComponent('dataType') + '=' + encodeURIComponent('JSON'); /* */
     queryParams += '&' + encodeURIComponent('base_date') + '=' + encodeURIComponent(today); /* */
     queryParams += '&' + encodeURIComponent('base_time') + '=' + encodeURIComponent("0500"); /* */
@@ -30,22 +29,21 @@ const weather = async (_, res) => {
       //console.log('Headers', JSON.stringify(response.headers));
       // console.log('Reponse received', weather.response.body.items.item);
       let weather = JSON.parse(body);
-      console.log(weather)
-      // const weatherData = weather.response.body.items.item;
+      // console.log(weather.response.body.items.item)
+      const weatherData = weather.response.body.items.item;
       try {
-        // for (let i = 0; i < weatherData.length; i++) {
-        //   if (weatherData[i].category === "TMX") {
-        //     highTemperature = weatherData[i].fcstValue;
-        //   } else if (weatherData[i].category === "TMN") {
-        //     lowTemperature = weatherData[i].fcstValue;
-        //   } else if (weatherData[i].baseDate === today && weatherData[i].category === "SKY" && weatherData[i].fcstTime === time) {
-        //     skyData = weatherData[i].fcstValue;
-        //   }
-        // }
+        for (let i = 0; i < weatherData.length; i++) {
+          if (weatherData[i].baseDate === today && weatherData[i].category === "SKY" && weatherData[i].fcstTime === time) {
+            skyData = weatherData[i].fcstValue;
+          }
+          else if (weatherData[i].baseDate === today && weatherData[i].category === "TMP" && weatherData[i].fcstTime === time) {
+            tmpData = weatherData[i].fcstValue;
+          }
+        }
       } catch (error) {
         console.log(error);
       }
-      return res.json({ weatherData, high: highTemperature, low: lowTemperature, sky: skyData, message: "날씨 조회 성공!" });
+      return res.json({ weatherData, tmp: tmpData, sky: skyData, message: "날씨 조회 성공!" });
     });
   } catch (error) {
     console.log(error);
