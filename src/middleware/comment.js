@@ -7,7 +7,7 @@ const commentList = async (req, res) => {
       postId: req.params.id
     });
     console.log("postId :" + req.params.id);
-    return res.json({ result: true, message: "댓글 목록조회 성공!!", cmtList: cmt });
+    return res.json({ result: true, message: "댓글 목록조회 성공!!", cmtList: cmt, r: cmt });
 
   } catch (error) {
     console.log(error);
@@ -33,4 +33,16 @@ const writeComment = async (req, res) => {
   }
 };
 
-module.exports = { commentList, writeComment };
+const deleteComment = async (req, res) => {
+  console.log(req.body.commentId);
+  try {
+    const cmt = await Comment.deleteOne({ _id: ObjectId(req.body.commentId) });
+    return res.json({ result: true, message: "댓글' 삭제 성공!!" });
+
+  } catch (error) {
+    console.log(error);
+    return res.json({ result: false, message: "댓글 삭제 실패!" });
+  }
+};
+
+module.exports = { commentList, writeComment, deleteComment };

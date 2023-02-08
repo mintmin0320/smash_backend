@@ -1,6 +1,7 @@
 const request = require('request');
 
-const weather = async (_, res) => {
+const weather = async (req, res) => {
+  console.log(req.params.myLocation)
   const date = new Date();
   const year = date.getFullYear();
   const month = ("0" + (1 + date.getMonth())).slice(-2);

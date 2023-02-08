@@ -14,6 +14,17 @@ const postList = async (_, res) => {
   }
 };
 
+const deletePost = async (req, res) => {
+  try {
+    const post = await Post.deleteOne({});
+    return res.json({ result: true, message: "게시글 삭제 성공!!", postList: post });
+
+  } catch (error) {
+    console.log(error);
+    return res.json({ result: false, message: "게시글 삭제 실패!" });
+  }
+};
+
 const writePost = async (req, res) => {
   const date = new Date();
   const author = await User.findOne({ userId: req.body.userId });
@@ -63,4 +74,4 @@ const searchPost = async (req, res) => {
   }
 };
 
-module.exports = { postList, writePost, viewPost, searchPost };
+module.exports = { postList, writePost, viewPost, searchPost, deletePost };
