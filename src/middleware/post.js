@@ -5,7 +5,7 @@ const User = require('../schemas/user');
 
 const postList = async (_, res) => {
   try {
-    const post = await Post.find({}).populate('author');
+    const post = await Post.find({}).sort({ _id: -1 }).populate('author');
     return res.json({ result: true, message: "게시글 목록조회 성공!!", postList: post });
 
   } catch (error) {

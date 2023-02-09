@@ -4,7 +4,7 @@ const User = require('../schemas/user');
 
 const groupList = async (_, res) => {
   try {
-    const match = await Match.find({}).populate('author');
+    const match = await Match.find({}).sort({ _id: -1 }).populate('author');
     return res.json({ result: true, message: "그룹 목록조회 성공!!", groupList: match });
 
   } catch (error) {

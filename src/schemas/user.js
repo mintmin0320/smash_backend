@@ -19,6 +19,9 @@ const userSchema = new Schema({
   profileImg: {
     type: String
   },
+  fileName: {
+    type: String
+  },
   role: {        // 관리자 구분 
     type: Number,
     default: 0, // 따로 입력 안 하면 0
