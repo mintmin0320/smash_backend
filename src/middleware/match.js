@@ -24,7 +24,7 @@ const recruitGroup = async (req, res) => {
       category: req.body.category,
       latitude: req.body.latitude,
       longitude: req.body.longitude,
-      // author: "author",
+      author: author,
       date: date.toLocaleString(),
     });
     console.log(match);
