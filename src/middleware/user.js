@@ -37,4 +37,14 @@ const downloadFile = async (req, res) => {
   return res.send({ status: "success", user });
 };
 
-module.exports = { uploadFile, downloadFile };
+const getProfileData = async (req, res) => {
+  console.log("params :", req.params.userId)
+
+  const user = await User.findOne({
+    userId: req.params.userId,
+  });
+
+  return res.send({ status: "success", user });
+};
+
+module.exports = { uploadFile, downloadFile, getProfileData };
