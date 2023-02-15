@@ -16,7 +16,10 @@ const matchSchema = new Schema({
     type: String,
   },
   count: {
-    type: String,
+    type: Number,
+  },
+  max_count: {
+    type: Number,
   },
   category: {
     type: String,
