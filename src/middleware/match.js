@@ -79,4 +79,26 @@ const classificationGroup = async (req, res) => {
   }
 };
 
-module.exports = { groupList, recruitGroup, searchGroup, detailView, classificationGroup };
+const joinGroup = async (req, res) => {
+  try {
+    const match = await Match.findOne(
+      { _id: ObjectId(req.body.matchId) }
+    );
+    console.log(match);
+    if (match.max_count > req.body.count) {
+      const count = await Match.UpdateOne(
+        { _id: ObjectId(req.body.matchId) }, { $set: { count: + req.body.count } }
+      );
+      res.json({ result: true });
+    } else {
+      res.json({ result: false, message: "hi" });
+    }
+
+
+  } catch (error) {
+    console.log(error);
+    res.json({ result: false });
+  }
+};
+
+module.exports = { groupList, recruitGroup, searchGroup, detailView, classificationGroup, joinGroup };
