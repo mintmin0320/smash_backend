@@ -72,7 +72,7 @@ const classificationGroup = async (req, res) => {
       category: req.params.category
     });
     console.log(match);
-    res.json({ result: true, groupList: match, message: "hi" });
+    return res.json({ result: true, groupList: match, message: "hi" });
   } catch (error) {
     console.log(error);
     res.json({ result: false });
@@ -81,17 +81,31 @@ const classificationGroup = async (req, res) => {
 
 const joinGroup = async (req, res) => {
   try {
+    const user = await User.findOne(
+      { _id: ObjectId(req.body.matchId) }
+    );
+
     const match = await Match.findOne(
       { _id: ObjectId(req.body.matchId) }
     );
     console.log(match);
-    if (match.max_count > req.body.count) {
-      const count = await Match.UpdateOne(
-        { _id: ObjectId(req.body.matchId) }, { $set: { count: + req.body.count } }
+    if (match.max_count <= match.count) {
+      return res.json({ result: false, message: "정원이 초과되었습니다." });
+    }
+    else {
+      await Match.updateOne(
+        { _id: ObjectId(req.body.matchId) }
+        , { $set: { count: match.count + req.body.count } }
       );
-      res.json({ result: true });
-    } else {
-      res.json({ result: false, message: "hi" });
+      const user = await User.findOne(
+        { match: req.body.matchId }
+      );
+
+      if (user.match === req.body.matchId) return res.json({ result: false })
+
+      return res.json({ result: false, message: '이미 신청이 완료되었습니다.' })
+
+      return res.json({ result: true, message: "가입신청 완료" });
     }
 
 
