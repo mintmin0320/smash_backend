@@ -82,8 +82,10 @@ const classificationGroup = async (req, res) => {
 const joinGroup = async (req, res) => {
   try {
     const user = await User.findOne(
-      { _id: ObjectId(req.body.matchId) }
+      { match: req.body.matchId }
     );
+
+    if (user) return res.json({ result: false, message: "이미 신청되었습니다." })
 
     const match = await Match.findOne(
       { _id: ObjectId(req.body.matchId) }

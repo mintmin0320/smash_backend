@@ -26,7 +26,7 @@ const userSchema = new Schema({
     type: Number,
     default: 0, // 따로 입력 안 하면 0
   },
-  match: {        // 관리자 구분 
+  match: {
     type: String,
   },
 }, {
