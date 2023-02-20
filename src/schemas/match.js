@@ -17,6 +17,7 @@ const matchSchema = new Schema({
   },
   count: {
     type: Number,
+    default: 1,
   },
   max_count: {
     type: Number,
@@ -29,7 +30,11 @@ const matchSchema = new Schema({
   },
   longitude: {
     type: String,
-  }
+  },
+  member: {
+    type: Array,
+    default: [],
+  },
 }, {
   versionKey: false,
 })
