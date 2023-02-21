@@ -5,7 +5,7 @@ const User = require('../schemas/user');
 
 const postList = async (_, res) => {
   try {
-    const post = await Post.find({}).sort({ _id: -1 }).populate('author');
+    const post = await Post.find({}).sort({ _id: -1 });
     return res.json({ result: true, message: "게시글 목록조회 성공!!", postList: post });
 
   } catch (error) {
@@ -27,12 +27,12 @@ const deletePost = async (req, res) => {
 
 const writePost = async (req, res) => {
   const date = new Date();
-  const author = await User.findOne({ userId: req.body.userId });
+  // const author = await User.findOne({ userId: req.body.userId });
   try {
     const post = await Post.create({
       title: req.body.postTitle,
       body: req.body.postBody,
-      author: author,
+      userId: req.body.userId,
       date: date.toLocaleString(),
     });
     console.log(post);
@@ -51,7 +51,7 @@ const viewPost = async (req, res) => {
       _id: ObjectId(req.params.id)
     }).populate('author');
     console.log(post);
-    res.json({ result: post });
+    res.json({ result: post.title });
   } catch (error) {
     console.log(error);
     res.json({ result: false });

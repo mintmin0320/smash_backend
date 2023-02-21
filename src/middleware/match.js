@@ -80,44 +80,6 @@ const classificationGroup = async (req, res) => {
   }
 };
 
-// const joinGroup = async (req, res) => {
-//   try {
-//     const user = await User.findOne(
-//       { match: req.body.matchId }
-//     );
-
-//     if (user) return res.json({ result: false, message: "이미 신청되었습니다." })
-
-//     const match = await Match.findOne(
-//       { _id: ObjectId(req.body.matchId) }
-//     );
-//     console.log(match);
-//     if (match.max_count <= match.count) {
-//       return res.json({ result: false, message: "정원이 초과되었습니다." });
-//     }
-//     else {
-//       await Match.updateOne(
-//         { _id: ObjectId(req.body.matchId) }
-//         , { $set: { count: match.count + req.body.count } }
-//       );
-//       const user = await User.findOne(
-//         { match: req.body.matchId }
-//       );
-
-//       if (user.match === req.body.matchId) return res.json({ result: false })
-
-//       return res.json({ result: false, message: '이미 신청이 완료되었습니다.' })
-
-//       return res.json({ result: true, message: "가입신청 완료" });
-//     }
-
-
-//   } catch (error) {
-//     console.log(error);
-//     res.json({ result: false });
-//   }
-// };
-
 const joinGroup = async (req, res) => {
   try {
     const matchInfo = await Match.findOne(
