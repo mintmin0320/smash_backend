@@ -49,9 +49,9 @@ const viewPost = async (req, res) => {
   try {
     const post = await Post.findOne({
       _id: ObjectId(req.params.id)
-    }).populate('author');
+    });
     console.log(post);
-    res.json({ result: post.title });
+    res.json({ result: post });
   } catch (error) {
     console.log(error);
     res.json({ result: false });

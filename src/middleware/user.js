@@ -32,7 +32,7 @@ const downloadFile = async (req, res) => {
 
   const user = await User.findOne({
     userId: req.params.userId,
-  });
+  }, { fileName: 1 });
 
   return res.send({ status: "success", user });
 };
