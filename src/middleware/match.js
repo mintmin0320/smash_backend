@@ -43,7 +43,7 @@ const detailView = async (req, res) => {
       _id: ObjectId(req.params.id)
     }).populate('author');
     console.log(match);
-    res.json({ result: match });
+    res.json({ result: match, message: "게시물 상세보기" });
   } catch (error) {
     console.log(error);
     res.json({ result: false });
@@ -51,18 +51,18 @@ const detailView = async (req, res) => {
 };
 
 const searchGroup = async (req, res) => {
-  console.log(req.params.search);
+  console.log("search : " + req.params.keyword);
   const regex = (pattern) => new RegExp(`.*${pattern}.*`);
-  const searchRegex = regex(req.params.search);
+  const searchRegex = regex(req.params.keyword);
   try {
     const match = await Match.find({
       title: { $regex: searchRegex }
     }).populate('author');
     console.log(match);
-    res.json({ result: true, matchList: match, message: "shi" });
+    res.json({ result: true, matchList: match, message: "그룹 검색 성공" });
   } catch (error) {
     console.log(error);
-    res.json({ result: false });
+    res.json({ result: false, message: "그룹 검색 성공" });
   }
 };
 

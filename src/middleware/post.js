@@ -1,6 +1,6 @@
 const { ObjectId } = require('mongodb');
 const Post = require('../schemas/post');
-const User = require('../schemas/user');
+const Comment = require('../schemas/comment');
 
 
 const postList = async (_, res) => {
@@ -16,8 +16,9 @@ const postList = async (_, res) => {
 
 const deletePost = async (req, res) => {
   try {
-    const post = await Post.deleteOne({});
-    return res.json({ result: true, message: "게시글 삭제 성공!!", postList: post });
+    await Post.deleteOne({ _id: ObjectId(req.body.postId) });
+    await Comment.deleteMany({ postId: ObjectId(req.body.postId) })
+    return res.json({ result: true, message: "게시글 삭제 성공!!" });
 
   } catch (error) {
     console.log(error);
@@ -51,10 +52,10 @@ const viewPost = async (req, res) => {
       _id: ObjectId(req.params.id)
     });
     console.log(post);
-    res.json({ result: post });
+    res.json({ result: post, message: "게시물 상세조회 성공" });
   } catch (error) {
     console.log(error);
-    res.json({ result: false });
+    res.json({ result: false, message: "게시물 상세조회 실패" });
   }
 };
 
@@ -65,12 +66,12 @@ const searchPost = async (req, res) => {
   try {
     const post = await Post.find({
       title: { $regex: searchRegex }
-    }).populate('author');
+    });
     console.log(post);
-    res.json({ result: true, postList: post });
+    res.json({ result: true, postList: post, message: "게시물 검색 성공" });
   } catch (error) {
     console.log(error);
-    res.json({ result: false });
+    res.json({ result: false, message: "게시물 검색 실패" });
   }
 };
 

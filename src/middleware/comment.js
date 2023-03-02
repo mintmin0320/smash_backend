@@ -7,7 +7,7 @@ const commentList = async (req, res) => {
       postId: req.params.id
     });
     console.log("postId :" + req.params.id);
-    return res.json({ result: true, message: "댓글 목록조회 성공!!", cmtList: cmt, r: cmt });
+    return res.json({ result: true, message: "댓글 목록조회 성공!!", cmtList: cmt });
 
   } catch (error) {
     console.log(error);

@@ -36,9 +36,11 @@ const weather = async (req, res) => {
         for (let i = 0; i < weatherData.length; i++) {
           if (weatherData[i].baseDate === today && weatherData[i].category === "SKY" && weatherData[i].fcstTime === time) {
             skyData = weatherData[i].fcstValue;
+            continue;
           }
           else if (weatherData[i].baseDate === today && weatherData[i].category === "TMP" && weatherData[i].fcstTime === time) {
             tmpData = weatherData[i].fcstValue;
+            continue;
           }
         }
       } catch (error) {
